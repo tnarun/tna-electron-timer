@@ -5,10 +5,14 @@ const path = require('path')
 const fs = require('fs')
 
 const getConfig = () => {
+  let path = app.getAppPath()
+  console.log(path)
+  let configPath = `${path}/config.json`
+
   let config
 
   try {
-    config = JSON.parse(fs.readFileSync('config.json'))
+    config = JSON.parse(fs.readFileSync(configPath))
   } catch (e) {
     config = null
   }
@@ -25,7 +29,7 @@ const getConfig = () => {
     }
   }
 
-  fs.writeFileSync('config.json', JSON.stringify(config, ' ', 2))
+  fs.writeFileSync(configPath, JSON.stringify(config, ' ', 2))
 
   return config
 }
@@ -85,7 +89,7 @@ app.on('ready', () => {
   })
 
   // 调试
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 })
 
 // Quit when all windows are closed.
