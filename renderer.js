@@ -4,3 +4,19 @@
 // `nodeIntegration` is turned off. Use `preload.js` to
 // selectively enable features needed in the rendering
 // process.
+
+require('electron').ipcRenderer.on('timerControl', (evt, msg) => {
+  console.log(msg)
+  if (msg == 'START') {
+    window.TIMER.startOrEnd()
+  }
+  if (msg == 'PAUSE') {
+    window.TIMER.pause()
+  }
+  if (msg == 'RESET') {
+    window.TIMER.reset()
+  }
+  if (msg == 'CANCEL') {
+    window.TIMER.cancel()
+  }
+})

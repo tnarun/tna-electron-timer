@@ -9,8 +9,8 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 300,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true
@@ -31,12 +31,27 @@ function createWindow () {
     mainWindow = null
   })
 
-  globalShortcut.register('CommandOrControl+X', () => {
-    console.log('CommandOrControl+X is pressed')
-    mainWindow.webContents.send('ping', 'hello')
+  globalShortcut.register('CommandOrControl+1', () => {
+    console.log('START')
+    mainWindow.webContents.send('timerControl', 'START')
   })
 
-  mainWindow.webContents.openDevTools()
+  globalShortcut.register('CommandOrControl+2', () => {
+    console.log('PAUSE')
+    mainWindow.webContents.send('timerControl', 'PAUSE')
+  })
+
+  globalShortcut.register('CommandOrControl+3', () => {
+    console.log('RESET')
+    mainWindow.webContents.send('timerControl', 'RESET')
+  })
+
+  globalShortcut.register('CommandOrControl+4', () => {
+    console.log('CANCEL')
+    mainWindow.webContents.send('timerControl', 'CANCEL')
+  })
+
+  // mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished

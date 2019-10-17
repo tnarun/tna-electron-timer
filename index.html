@@ -21,10 +21,5 @@
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
-    <script>
-      require('electron').ipcRenderer.on('ping', (evt, msg) => {
-        console.log(msg)
-      })
-    </script>
   </body>
 </html>

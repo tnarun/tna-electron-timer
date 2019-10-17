@@ -17,7 +17,7 @@ class Timer extends React.Component {
 
     let ss = ~~(md.milliseconds() / 100)
 
-    return <div className={ 'Timer' }>
+    return <div className={ `Timer ${this.state.status}` }>
       <div className={ 'value' }>{ `${_d}${_h}${_m}${_s}${ss}` }</div>
       <div className={ 'grids' }>
         <Grid n={ h } />
@@ -31,16 +31,104 @@ class Timer extends React.Component {
   }
 
   state = {
+    status: 'IDLE', // IDLE, RUN, PAUSE, END
     value: 0
   }
 
   componentDidMount () {
-    this.start = new Date().getTime()
+    window.TIMER = this
+
     this.timer = setInterval(() => {
       let t = new Date().getTime()
-      let value = t - this.start
+      let value = this.getValue(t)
       this.setState({ value })
     }, 1)
+  }
+
+  componentWillUnmount () {
+    clearInterval(this.timer)
+  }
+
+  startOrEnd () {
+    let { status } = this.state
+    if (status == 'IDLE') {
+      this._idle_to_run()
+    }
+
+    if (status == 'RUN') {
+      this._run_to_end()
+    }
+
+    if (status == 'PAUSE') {
+      this._pause_to_run()
+    }
+  }
+
+  pause () {
+    let { status } = this.state
+    if (status == 'RUN') {
+      this._run_to_pause()
+    }
+  }
+
+  reset () {
+    let { status } = this.state
+    this._all_reset()
+  }
+
+  cancel () {
+    let { status } = this.state
+    if (status == 'END') {
+      this._end_to_run()
+    }
+  }
+
+  getValue() {
+    let { status } = this.state
+
+    if (status == 'IDLE') {
+      return 0
+    }
+
+    if (status == 'RUN') {
+      return new Date().getTime() - this.startTime
+    }
+
+    if (status == 'END') {
+      return this.state.value
+    }
+
+    if (status == 'PAUSE') {
+      return this.state.value
+    }
+  }
+
+  _idle_to_run () {
+    this.startTime = new Date().getTime()
+    this.setState({ status: 'RUN' })
+  }
+
+  _run_to_end () {
+    this.setState({ status: 'END' })
+  }
+
+  _run_to_pause () {
+    this.pauseTime = new Date().getTime()
+    this.setState({ status: 'PAUSE' })
+  }
+
+  _pause_to_run () {
+    let pausePeriod = new Date().getTime() - this.pauseTime
+    this.startTime += pausePeriod
+    this.setState({ status: 'RUN' })
+  }
+
+  _all_reset () {
+    this.setState({ status: 'IDLE' })
+  }
+
+  _end_to_run () {
+    this.setState({ status: 'RUN' })
   }
 }
 

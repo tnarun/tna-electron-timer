@@ -1,49 +1,62 @@
 body {
-    background-color: #00121b;
-    color: white;
-  }
+  background-color: #00121b;
+  color: white;
+}
+
+/* $kksk2C1: #019ef2;
+$kksk2C2: #f37741; */
   
-  .Timer {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #00121b;
-    color: #01b0ff;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
-  }
-  
-  .Timer .value {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    font-size: 12vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #67d0ff;
-    z-index: 999;
-    text-shadow: 0 0 1vw #67d0ff;
-  }
-  
-  .Timer .grids {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-gap: 1vw;
-    padding: 1vw;
-  }
-  
-  .Timer .grids .Grid {
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    grid-gap: 1vw;
-  }
-  
-  .Timer .grids .Grid span {
-    background-color: rgba(205, 239, 255, 0.1);
-    transition: background-color ease .1s;
-  }
-  
-  .Timer .grids .Grid span.o {
-    background-color: rgba(205, 239, 255, 0.4);
-  }
+.Timer {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #00121b;
+  color: #019ef2;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
+
+.Timer .value {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  font-size: 12vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #5bc5fe;
+  z-index: 999;
+  text-shadow: 0 0 1vw #5bc5fe;
+}
+
+.Timer.IDLE .value, .Timer.PAUSE .value {
+  color: #888;
+  text-shadow: 0 0 1vw #888;
+}
+
+.Timer.END .value {
+  color: #f37741;
+  text-shadow: 0 0 1vw #f37741;   
+}
+
+.Timer .grids {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 1vw;
+  padding: 1vw;
+}
+
+.Timer .grids .Grid {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-gap: 1vw;
+}
+
+.Timer .grids .Grid span {
+  background-color: rgba(205, 239, 255, 0.1);
+  transition: background-color ease .1s;
+}
+
+.Timer .grids .Grid span.o {
+  background-color: rgba(205, 239, 255, 0.4);
+}
