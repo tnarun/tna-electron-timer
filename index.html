@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.min.js"></script>
+    
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <link 
+      rel="stylesheet" type="text/css"
+      href="./timer.css">
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+    <div id="root"></div>
+    <script type="text/babel" src="./timer.js"></script>
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
+    <script>
+      require('electron').ipcRenderer.on('ping', (evt, msg) => {
+        console.log(msg)
+      })
+    </script>
   </body>
 </html>
