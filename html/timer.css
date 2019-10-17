@@ -9,8 +9,8 @@ $kksk2C2: #f37741; */
 .Timer {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #00121b;
-  color: #019ef2;
+  background-color: #00090d;
+  color: white;
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
 }
@@ -27,9 +27,10 @@ $kksk2C2: #f37741; */
   text-shadow: 0 0 1vw #5bc5fe;
 }
 
-.Timer.IDLE .value, .Timer.PAUSE .value {
-  color: #888;
-  text-shadow: 0 0 1vw #888;
+.Timer.IDLE .value, 
+.Timer.PAUSE .value {
+  color: #939393;
+  text-shadow: 0 0 1vw #939393;
 }
 
 .Timer.END .value {
@@ -53,10 +54,31 @@ $kksk2C2: #f37741; */
 }
 
 .Timer .grids .Grid span {
-  background-color: rgba(205, 239, 255, 0.1);
+  background-color: #8dd7ff;
   transition: background-color ease .1s;
+  opacity: 0.1;
 }
 
 .Timer .grids .Grid span.o {
-  background-color: rgba(205, 239, 255, 0.4);
+  opacity: 0.4;
+}
+
+.Timer.IDLE,
+.Timer.PAUSE
+{
+  background-color: #000;
+}
+
+.Timer.IDLE .grids .Grid span,
+.Timer.PAUSE .grids .Grid span
+{
+  background-color: #b9b9b9;
+}
+
+.Timer.END {
+  background-color: #020100;
+}
+
+.Timer.END .grids .Grid span {
+  background-color: #f8ab89;
 }

@@ -1,0 +1,8 @@
+{
+  "WINDOW_WIDTH": 1000,
+  "WINDOW_HEIGHT": 300,
+  "KEY_START": "CommandOrControl+1",
+  "KEY_PAUSE": "CommandOrControl+2",
+  "KEY_RESET": "CommandOrControl+3",
+  "KEY_CANCEL": "CommandOrControl+4"
+}

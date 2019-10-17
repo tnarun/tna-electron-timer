@@ -1,16 +1,49 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, globalShortcut} = require('electron')
+const { app, BrowserWindow, globalShortcut } = require('electron')
 const path = require('path')
+
+const fs = require('fs')
+
+const getConfig = () => {
+  let config
+
+  try {
+    config = JSON.parse(fs.readFileSync('config.json'))
+  } catch (e) {
+    config = null
+  }
+
+  if (!config) {
+    config = {
+      WINDOW_WIDTH: 1000,
+      WINDOW_HEIGHT: 300,
+    
+      KEY_START: 'CommandOrControl+1',
+      KEY_PAUSE: 'CommandOrControl+2',
+      KEY_RESET: 'CommandOrControl+3',
+      KEY_CANCEL: 'CommandOrControl+4'
+    }
+  }
+
+  fs.writeFileSync('config.json', JSON.stringify(config, ' ', 2))
+
+  return config
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function createWindow () {
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on('ready', () => {
+  let CONFIG = getConfig()
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 300,
+    width: CONFIG.WINDOW_WIDTH,
+    height: CONFIG.WINDOW_HEIGHT,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true
@@ -18,7 +51,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('html/index.html')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -31,42 +64,38 @@ function createWindow () {
     mainWindow = null
   })
 
-  globalShortcut.register('CommandOrControl+1', () => {
+  globalShortcut.register(CONFIG.KEY_START, () => {
     console.log('START')
     mainWindow.webContents.send('timerControl', 'START')
   })
 
-  globalShortcut.register('CommandOrControl+2', () => {
+  globalShortcut.register(CONFIG.KEY_PAUSE, () => {
     console.log('PAUSE')
     mainWindow.webContents.send('timerControl', 'PAUSE')
   })
 
-  globalShortcut.register('CommandOrControl+3', () => {
+  globalShortcut.register(CONFIG.KEY_RESET, () => {
     console.log('RESET')
     mainWindow.webContents.send('timerControl', 'RESET')
   })
 
-  globalShortcut.register('CommandOrControl+4', () => {
+  globalShortcut.register(CONFIG.KEY_CANCEL, () => {
     console.log('CANCEL')
     mainWindow.webContents.send('timerControl', 'CANCEL')
   })
 
-  // mainWindow.webContents.openDevTools()
-}
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+  // 调试
+  mainWindow.webContents.openDevTools()
+})
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function () {
+app.on('window-all-closed', () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') app.quit()
 })
 
-app.on('activate', function () {
+app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow()

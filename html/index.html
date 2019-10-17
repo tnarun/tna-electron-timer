@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/moment.min.js"></script>
+    
+    <!-- Don't use this in production: -->
+    <script src="lib/babel.min.js"></script>
+
+    <link 
+      rel="stylesheet" type="text/css"
+      href="./timer.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel" src="./timer.js"></script>
+
+    <!-- You can also require other files to run in this process -->
+    <script src="../renderer.js"></script>
+  </body>
+</html>
