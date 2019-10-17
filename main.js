@@ -5,7 +5,13 @@ const path = require('path')
 const fs = require('fs')
 
 const getConfig = () => {
-  let path = app.getAppPath()
+  let path
+  console.log(process.platform)
+  if (process.platform == 'darwin') {
+    path = app.getAppPath()
+  } else {
+    path = app.getPath('exe')
+  }
   console.log(path)
   let configPath = `${path}/config.json`
 
