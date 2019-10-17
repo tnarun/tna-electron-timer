@@ -7,12 +7,9 @@ const fs = require('fs')
 const getConfig = () => {
   let path
   console.log(process.platform)
-  if (process.platform == 'darwin') {
-    path = app.getAppPath()
-  } else {
-    path = app.getPath('exe')
-  }
-  console.log(path)
+  console.log(process.resourcesPath)
+  path = process.resourcesPath
+  
   let configPath = `${path}/config.json`
 
   let config
